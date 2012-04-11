@@ -1,6 +1,5 @@
 <?php
 
-class BlogAppModel extends AppModel {
-
+class BlogAppModel extends AppModel
+{
 }
-
