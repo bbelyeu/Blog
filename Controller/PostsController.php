@@ -1,92 +1,127 @@
 <?php
 App::uses('BlogAppController', 'Blog.Controller');
+/**
+ * Posts Controller
+ *
+ * @property Post $Post
+ */
+class PostsController extends BlogAppController {
 
-class PostsController extends BlogAppController 
-{
-	public $name = 'Posts';
 
-	public function index() 
-	{
-		$this->paginate = array(
-			'Post' => array(
-				'conditions' => 'Post.publish <= NOW()',
-				'order' => array('Post.publish' => 'desc'),
-			),
-		);
+/**
+ * index method
+ *
+ * @return void
+ */
+	public function index() {
+        $this->paginate = array(
+            'Post' => array(
+                'conditions' => 'Post.publish <= NOW()',
+                'order' => array('Post.publish' => 'desc'),
+            ),
+        );
 
 		$this->Post->recursive = 0;
 		$this->set('posts', $this->paginate());
 	}
 
-	public function view($id = null) 
-	{
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid post', true));
-			$this->redirect(array('action' => 'index'));
-		} else {
-			$this->set('post', $this->Post->read(null, $id));
-		}
-	}
-
-	public function admin_index() 
-	{
-		$this->Post->recursive = 0;
-		$this->set('posts', $this->paginate());
-	}
-
-	public function admin_view($id = null) 
-	{
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid post', true));
-			$this->redirect(array('action' => 'index'));
+/**
+ * view method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function view($id = null) {
+		$this->Post->id = $id;
+		if (!$this->Post->exists()) {
+			throw new NotFoundException(__('Invalid post'));
 		}
 		$this->set('post', $this->Post->read(null, $id));
 	}
 
-	public function admin_add() 
-	{
-		if (!empty($this->data)) {
+/**
+ * admin_index method
+ *
+ * @return void
+ */
+	public function admin_index() {
+		$this->Post->recursive = 0;
+		$this->set('posts', $this->paginate());
+	}
+
+/**
+ * admin_view method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function admin_view($id = null) {
+		$this->Post->id = $id;
+		if (!$this->Post->exists()) {
+			throw new NotFoundException(__('Invalid post'));
+		}
+		$this->set('post', $this->Post->read(null, $id));
+	}
+
+/**
+ * admin_add method
+ *
+ * @return void
+ */
+	public function admin_add() {
+		if ($this->request->is('post')) {
 			$this->Post->create();
-			if ($this->Post->save($this->data)) {
-				$this->Session->setFlash(__('The post has been saved', true));
+			if ($this->Post->save($this->request->data)) {
+				$this->Session->setFlash(__('The post has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The post could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The post could not be saved. Please, try again.'));
 			}
 		}
 	}
 
-	public function admin_edit($id = null) 
-	{
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid post', true));
+/**
+ * admin_edit method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function admin_edit($id = null) {
+		$this->Post->id = $id;
+		if (!$this->Post->exists()) {
+			throw new NotFoundException(__('Invalid post'));
+		}
+		if ($this->request->is('post') || $this->request->is('put')) {
+			if ($this->Post->save($this->request->data)) {
+				$this->Session->setFlash(__('The post has been saved'));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The post could not be saved. Please, try again.'));
+			}
+		} else {
+			$this->request->data = $this->Post->read(null, $id);
+		}
+	}
+
+/**
+ * admin_delete method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function admin_delete($id = null) {
+		if (!$this->request->is('post')) {
+			throw new MethodNotAllowedException();
+		}
+		$this->Post->id = $id;
+		if (!$this->Post->exists()) {
+			throw new NotFoundException(__('Invalid post'));
+		}
+		if ($this->Post->delete()) {
+			$this->Session->setFlash(__('Post deleted'));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->Post->save($this->data)) {
-				$this->Session->setFlash(__('The post has been saved', true));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The post could not be saved. Please, try again.', true));
-			}
-		}
-		if (empty($this->data)) {
-			$this->data = $this->Post->read(null, $id);
-		}
-	}
-
-	public function admin_delete($id = null) 
-	{
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for post', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		if ($this->Post->delete($id)) {
-			$this->Session->setFlash(__('Post deleted', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		$this->Session->setFlash(__('Post was not deleted', true));
+		$this->Session->setFlash(__('Post was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
-
 }

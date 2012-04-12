@@ -1,44 +1,24 @@
 <?php
 App::uses('BlogAppModel', 'Blog.Model');
 /**
- * Post Model
+ * Tag Model
  *
- * @property Tag $Tag
+ * @property Post $Post
  */
-class Post extends BlogAppModel {
+class Tag extends BlogAppModel {
 /**
  * Display field
  *
  * @var string
  */
-	public $displayField = 'title';
+	public $displayField = 'name';
 /**
  * Validation rules
  *
  * @var array
  */
 	public $validate = array(
-		'title' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'body' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'publish' => array(
+		'name' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
@@ -58,11 +38,11 @@ class Post extends BlogAppModel {
  * @var array
  */
 	public $hasAndBelongsToMany = array(
-		'Tag' => array(
-			'className' => 'Tag',
+		'Post' => array(
+			'className' => 'Post',
 			'joinTable' => 'posts_tags',
-			'foreignKey' => 'post_id',
-			'associationForeignKey' => 'tag_id',
+			'foreignKey' => 'tag_id',
+			'associationForeignKey' => 'post_id',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',

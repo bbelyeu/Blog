@@ -1,3 +1,11 @@
+<style>
+textarea, input {
+    width: 400px;
+}
+textarea {
+    height: 200px;
+}
+</style>
 <div class="posts form">
 <?php echo $this->Form->create('Post');?>
 	<fieldset>
