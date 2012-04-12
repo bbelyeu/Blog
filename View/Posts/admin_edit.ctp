@@ -1,12 +1,25 @@
+<script type="text/javascript" src="/blog/ckeditor/ckeditor.js"></script>
+<style>
+input {
+    width: 400px;
+}
+</style>
 <div class="posts form">
 <?php echo $this->Form->create('Post');?>
 	<fieldset>
-		<legend><?php __('Admin Edit Blog Post'); ?></legend>
+		<legend><?php __('Edit Blog Post'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('title');
-		echo $this->Form->input('body');
-		echo $this->Form->input('publish');
+		echo $this->Form->input('body', array(
+            'class' => 'ckeditor'
+        ));
+		echo $this->Form->input('publish', array(
+            'div' => false,
+            'class' => 'datetime-field',
+            'dateFormat' => 'DMY',
+            'minYear' => date('Y'),
+        ));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit'));?>

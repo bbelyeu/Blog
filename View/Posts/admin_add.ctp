@@ -1,16 +1,13 @@
 <script type="text/javascript" src="/blog/ckeditor/ckeditor.js"></script>
 <style>
-textarea, input {
+input {
     width: 400px;
-}
-textarea {
-    height: 200px;
 }
 </style>
 <div class="posts form">
 <?php echo $this->Form->create('Post');?>
 	<fieldset>
-		<legend><?php __('Admin Add Blog Post'); ?></legend>
+		<legend><?php __('Add Blog Post'); ?></legend>
 	<?php
         echo $this->Form->input('title');
         echo $this->Form->input('body', array(
