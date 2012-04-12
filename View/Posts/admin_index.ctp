@@ -12,7 +12,7 @@
 	</tr>
 	<?php
 	foreach ($posts as $post): ?>
-	<tr<?php echo $class;?>>
+	<tr>
 		<td><?php echo h($post['Post']['id']); ?>&nbsp;</td>
 		<td><?php echo h($post['Post']['title']); ?>&nbsp;</td>
 		<td><?php echo h($post['Post']['body']); ?>&nbsp;</td>

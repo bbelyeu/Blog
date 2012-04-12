@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/blog/ckeditor/ckeditor.js"></script>
 <style>
 textarea, input {
     width: 400px;
@@ -12,8 +13,16 @@ textarea {
 		<legend><?php __('Admin Add Blog Post'); ?></legend>
 	<?php
         echo $this->Form->input('title');
-        echo $this->Form->input('body');
-        echo $this->Form->input('publish');
+        echo $this->Form->input('body', array(
+            'class' => 'ckeditor'
+        ));
+        echo $this->Form->input('publish', array(
+            'div' => false,
+            'class' => 'datetime-field',
+            'dateFormat' => 'DMY',
+            'minYear' => date('Y'),
+        ));
+        echo $this->Form->input('Tag');
     ?>
     </fieldset>
     <?php echo $this->Form->end(__('Submit'));

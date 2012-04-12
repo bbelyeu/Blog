@@ -78,6 +78,8 @@ class PostsController extends BlogAppController {
 				$this->Session->setFlash(__('The post could not be saved. Please, try again.'));
 			}
 		}
+		$tags = $this->Post->Tag->find('list');
+		$this->set(compact('tags'));
 	}
 
 /**
