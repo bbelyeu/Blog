@@ -1,5 +1,5 @@
 <div class="tags index">
-	<h2><?php echo __('Tags');?></h2>
+	<h2><?php echo __('Blog Post Tags');?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
@@ -41,8 +41,8 @@
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('New Tag'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Posts'), array('controller' => 'posts', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Post'), array('controller' => 'posts', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Tag'), '/admin/tags/add'); ?></li>
+		<li><?php echo $this->Html->link(__('List Posts'), '/admin/posts'); ?> </li>
+		<li><?php echo $this->Html->link(__('New Post'), '/admin/posts/add'); ?> </li>
 	</ul>
 </div>

@@ -14,15 +14,37 @@ Router::connect('/admin/posts', array(
     'prefix' => 'admin'
 ));
 
+Router::connect('/admin/tags', array(
+    'plugin' => 'Blog',
+    'controller' => 'Tags',
+    'action' => 'index',
+    'prefix' => 'admin'
+));
+
 Router::connect('/admin/posts/:action', array(
     'plugin' => 'Blog',
     'controller' => 'Posts',
     'prefix' => 'admin'
 ));
 
+Router::connect('/admin/tags/:action', array(
+    'plugin' => 'Blog',
+    'controller' => 'Tags',
+    'prefix' => 'admin'
+));
+
 Router::connect('/admin/posts/:action/:id', array(
     'plugin' => 'Blog',
     'controller' => 'Posts',
+    'prefix' => 'admin'
+), array(
+    'pass' => array('id'),
+    'id' => '[0-9]+'
+));
+
+Router::connect('/admin/tags/:action/:id', array(
+    'plugin' => 'Blog',
+    'controller' => 'Tags',
     'prefix' => 'admin'
 ), array(
     'pass' => array('id'),

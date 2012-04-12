@@ -1,5 +1,5 @@
 <div class="tags view">
-<h2><?php  echo __('Tag');?></h2>
+<h2><?php  echo __('Blog Post Tag');?></h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
 		<dd>
@@ -26,12 +26,12 @@
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('Edit Tag'), array('action' => 'edit', $tag['Tag']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete Tag'), array('action' => 'delete', $tag['Tag']['id']), null, __('Are you sure you want to delete # %s?', $tag['Tag']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Tags'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Tag'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Posts'), array('controller' => 'posts', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Post'), array('controller' => 'posts', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Edit Tag'), '/admin/tags/edit'.$tag['Tag']['id']); ?> </li>
+		<li><?php echo $this->Form->postLink(__('Delete Tag'), '/admin/tags/delete'.$tag['Tag']['id'], null, __('Are you sure you want to delete # %s?', $tag['Tag']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List Tags'), '/admin/tags'); ?> </li>
+		<li><?php echo $this->Html->link(__('New Tag'), '/admin/tags/add'); ?> </li>
+		<li><?php echo $this->Html->link(__('List Posts'), '/admin/posts'); ?> </li>
+		<li><?php echo $this->Html->link(__('New Post'), '/admin/posts/add'); ?> </li>
 	</ul>
 </div>
 <div class="related">
@@ -58,9 +58,9 @@
 			<td><?php echo $post['created'];?></td>
 			<td><?php echo $post['modified'];?></td>
 			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'posts', 'action' => 'view', $post['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'posts', 'action' => 'edit', $post['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'posts', 'action' => 'delete', $post['id']), null, __('Are you sure you want to delete # %s?', $post['id'])); ?>
+				<?php echo $this->Html->link(__('View'), '/admin/posts/view'.$post['id']); ?>
+				<?php echo $this->Html->link(__('Edit'), '/admin/posts/edit'.$post['id']); ?>
+				<?php echo $this->Form->postLink(__('Delete'), '/admin/posts/delete'.$post['id'], null, __('Are you sure you want to delete # %s?', $post['id'])); ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>
@@ -69,7 +69,7 @@
 
 	<div class="actions">
 		<ul>
-			<li><?php echo $this->Html->link(__('New Post'), array('controller' => 'posts', 'action' => 'add'));?> </li>
+			<li><?php echo $this->Html->link(__('New Post'), '/admin/posts/add');?> </li>
 		</ul>
 	</div>
 </div>

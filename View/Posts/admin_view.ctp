@@ -16,6 +16,11 @@
 			<?php echo h($post['Post']['body']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php __('Publish'); ?></dt>
+		<dd>
+			<?php echo h($post['Post']['publish']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php __('Created'); ?></dt>
 		<dd>
 			<?php echo h($post['Post']['created']); ?>
@@ -35,5 +40,42 @@
 		<li><?php echo $this->Form->postLink(__('Delete Post'), '/admin/posts/delete/'.$post['Post']['id'], null, __('Are you sure you want to delete # %s?', $post['Post']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('List Posts'), '/admin/posts'); ?> </li>
 		<li><?php echo $this->Html->link(__('New Post'), '/admin/posts/add'); ?> </li>
+		<li><?php echo $this->Html->link(__('List Tags'), '/admin/tags'); ?> </li>
+		<li><?php echo $this->Html->link(__('New Tag'), '/admin/tag/add'); ?> </li>
 	</ul>
+</div>
+<div class="related">
+	<h3><?php echo __('Related Tags');?></h3>
+	<?php if (!empty($post['Tag'])):?>
+	<table cellpadding = "0" cellspacing = "0">
+	<tr>
+		<th><?php echo __('Id'); ?></th>
+		<th><?php echo __('Name'); ?></th>
+		<th><?php echo __('Created'); ?></th>
+		<th><?php echo __('Modified'); ?></th>
+		<th class="actions"><?php echo __('Actions');?></th>
+	</tr>
+	<?php
+		$i = 0;
+		foreach ($post['Tag'] as $tag): ?>
+		<tr>
+			<td><?php echo $tag['id'];?></td>
+			<td><?php echo $tag['name'];?></td>
+			<td><?php echo $tag['created'];?></td>
+			<td><?php echo $tag['modified'];?></td>
+			<td class="actions">
+				<?php echo $this->Html->link(__('View'), '/admin/tags/view'.$tag['id']); ?>
+				<?php echo $this->Html->link(__('Edit'), '/admin/tags/edit'.$tag['id']); ?>
+				<?php echo $this->Form->postLink(__('Delete'), '/admin/tags/delete'.$tag['id'], null, __('Are you sure you want to delete # %s?', $post['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('New Tag'), '/admin/tags/add');?> </li>
+		</ul>
+	</div>
 </div>
