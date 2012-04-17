@@ -1,5 +1,6 @@
 CREATE TABLE posts (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    image_id int unsigned not null,
     title VARCHAR(255) NOT NULL,
     body TEXT NOT NULL,
     publish DATETIME NOT NULL,

@@ -5,10 +5,11 @@ input {
 }
 </style>
 <div class="posts form">
-<?php echo $this->Form->create('Post');?>
+<?php echo $this->Form->create('Post', array('enctype' => 'multipart/form-data'));?>
 	<fieldset>
 		<legend><?php __('Add Blog Post'); ?></legend>
 	<?php
+        echo $this->Form->input('photo_upload', array('type' => 'file'));
         echo $this->Form->input('title');
         echo $this->Form->input('body', array(
             'class' => 'ckeditor'

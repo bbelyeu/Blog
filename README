@@ -2,7 +2,8 @@ Yet Another CakePhp 2.x Blog Plugin
 
 Steps:
 1. Import posts.sql, tags.sql, & posts_tags.sql from Blog/Config/Schema/ file
-    into cake db
+    into cake db.
+    * If you'd like to use an image with blog posts also import images_posts.sql
 
 2. Add the following line to your app/Config/bootstrap.php
     CakePlugin::load('Blog', array('routes' => true));
@@ -12,6 +13,8 @@ Steps:
 Notes:
 * All admin routes go through /admin/(posts|tags) or /admin/(posts|tags)/:action.
     If a different route config is needed add it to Blog/Config/routes.php
+* If you're using my MysqlImageStorage plugin with the blog, make sure that is 
+    loaded in bootstrap.php also.
 
 Helpful links:
 http://book.cakephp.org/2.0/en/plugins.html

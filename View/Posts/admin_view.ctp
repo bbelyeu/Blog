@@ -1,32 +1,37 @@
 <div class="posts view">
-<h2><?php  __('Post');?></h2>
+<h2><?php echo __('Post');?></h2>
 	<dl>
-		<dt><?php __('Id'); ?></dt>
+		<dt><?php echo __('Id'); ?></dt>
 		<dd>
 			<?php echo h($post['Post']['id']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php __('Title'); ?></dt>
+		<dt><?php echo __('Image'); ?></dt>
+		<dd>
+			<img src="/images/<?php echo h($post['Post']['image_id']); ?>" />
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Title'); ?></dt>
 		<dd>
 			<?php echo h($post['Post']['title']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php __('Body'); ?></dt>
+		<dt><?php echo __('Body'); ?></dt>
 		<dd>
 			<?php echo h($post['Post']['body']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php __('Publish'); ?></dt>
+		<dt><?php echo __('Publish'); ?></dt>
 		<dd>
 			<?php echo h($post['Post']['publish']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php __('Created'); ?></dt>
+		<dt><?php echo __('Created'); ?></dt>
 		<dd>
 			<?php echo h($post['Post']['created']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php __('Modified'); ?></dt>
+		<dt><?php echo __('Modified'); ?></dt>
 		<dd>
 			<?php echo h($post['Post']['modified']); ?>
 			&nbsp;
@@ -66,7 +71,7 @@
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), '/admin/tags/view'.$tag['id']); ?>
 				<?php echo $this->Html->link(__('Edit'), '/admin/tags/edit'.$tag['id']); ?>
-				<?php echo $this->Form->postLink(__('Delete'), '/admin/tags/delete'.$tag['id'], null, __('Are you sure you want to delete # %s?', $post['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), '/admin/tags/delete'.$tag['id'], null, __('Are you sure you want to delete # %s?', $tag['id'])); ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

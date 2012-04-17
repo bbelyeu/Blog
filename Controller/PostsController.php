@@ -5,15 +5,16 @@ App::uses('BlogAppController', 'Blog.Controller');
  *
  * @property Post $Post
  */
-class PostsController extends BlogAppController {
+class PostsController extends BlogAppController
+{
 
-
-/**
- * index method
- *
- * @return void
- */
-	public function index() {
+    /**
+     * index method
+     *
+     * @return void
+     */
+	public function index()
+    {
         $this->paginate = array(
             'Post' => array(
                 'conditions' => 'Post.publish <= NOW()',
@@ -23,53 +24,84 @@ class PostsController extends BlogAppController {
 
 		$this->Post->recursive = 0;
 		$this->set('posts', $this->paginate());
+
+        // if used in conjunction with MysqlImageStorage plugin
+        if (App::import('Model', 'MysqlImageStorage.Image')) {
+        }
 	}
 
-/**
- * view method
- *
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
+    /**
+     * view method
+     *
+     * @param string $id
+     * @return void
+     */
+	public function view($id = null)
+    {
 		$this->Post->id = $id;
 		if (!$this->Post->exists()) {
 			throw new NotFoundException(__('Invalid post'));
 		}
-		$this->set('post', $this->Post->read(null, $id));
+
+        $post = $this->Post->read(null, $id);
+
+        // if used in conjunction with MysqlImageStorage plugin
+        if (App::import('Model', 'MysqlImageStorage.Image')) {
+        }
+
+		$this->set('post', $post);
 	}
 
-/**
- * admin_index method
- *
- * @return void
- */
-	public function admin_index() {
+    /**
+     * admin_index method
+     *
+     * @return void
+     */
+	public function admin_index() 
+    {
 		$this->Post->recursive = 0;
 		$this->set('posts', $this->paginate());
 	}
 
-/**
- * admin_view method
- *
- * @param string $id
- * @return void
- */
-	public function admin_view($id = null) {
+    /**
+     * admin_view method
+     *
+     * @param string $id
+     * @return void
+     */
+	public function admin_view($id = null) 
+    {
 		$this->Post->id = $id;
 		if (!$this->Post->exists()) {
 			throw new NotFoundException(__('Invalid post'));
 		}
-		$this->set('post', $this->Post->read(null, $id));
+
+        $post = $this->Post->read(null, $id);
+
+        // if used in conjunction with MysqlImageStorage plugin
+        if (App::import('Model', 'MysqlImageStorage.Image')) {
+            $Image = new Image();
+            //$imgData = $Image->query('select * from images_posts where post_id = ' . (int) $id);
+            //echo '<pre>';var_dump($imgData);die;
+        }
+
+		$this->set('post', $post);
 	}
 
-/**
- * admin_add method
- *
- * @return void
- */
-	public function admin_add() {
+    /**
+     * admin_add method
+     *
+     * @return void
+     */
+	public function admin_add() 
+    {
 		if ($this->request->is('post')) {
+            // if used in conjunction with MysqlImageStorage plugin
+            if (App::import('Model', 'MysqlImageStorage.Image')) {
+                $this->ImageComponent = $this->Components->load('MysqlImageStorage.Image');
+                $this->request->data['Post']['image_id'] = $this->ImageComponent->process($this->request->data['Post']);
+            }
+
 			$this->Post->create();
 			if ($this->Post->save($this->request->data)) {
 				$this->Session->setFlash(__('The post has been saved'));
@@ -82,19 +114,30 @@ class PostsController extends BlogAppController {
 		$this->set(compact('tags'));
 	}
 
-/**
- * admin_edit method
- *
- * @param string $id
- * @return void
- */
-	public function admin_edit($id = null) {
+    /**
+     * admin_edit method
+     *
+     * @param string $id
+     * @return void
+     */
+	public function admin_edit($id = null) 
+    {
 		$this->Post->id = $id;
 		if (!$this->Post->exists()) {
 			throw new NotFoundException(__('Invalid post'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
+            // if used in conjunction with MysqlImageStorage plugin
+            if (App::import('Model', 'MysqlImageStorage.Image')) {
+                $this->ImageComponent = $this->Components->load('MysqlImageStorage.Image');
+                $this->request->data['Post']['image_id'] = $this->ImageComponent->process($this->request->data['Post']);
+            }
+
 			if ($this->Post->save($this->request->data)) {
+
+                // if used in conjunction with MysqlImageStorage plugin
+                if (App::import('Model', 'MysqlImageStorage.Image')) {
+                }
 				$this->Session->setFlash(__('The post has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -105,13 +148,14 @@ class PostsController extends BlogAppController {
 		}
 	}
 
-/**
- * admin_delete method
- *
- * @param string $id
- * @return void
- */
-	public function admin_delete($id = null) {
+    /**
+     * admin_delete method
+     *
+     * @param string $id
+     * @return void
+     */
+	public function admin_delete($id = null) 
+    {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}
@@ -119,11 +163,23 @@ class PostsController extends BlogAppController {
 		if (!$this->Post->exists()) {
 			throw new NotFoundException(__('Invalid post'));
 		}
+        $imageId = $this->Post->image_id;
 		if ($this->Post->delete()) {
+            // if used in conjunction with MysqlImageStorage plugin
+            // then delete the image also
+            if (App::import('Model', 'MysqlImageStorage.Image')) {
+                $Image = new Image();
+                $Image->id = $imageId;
+                if ($Image->exists()) {
+                    $Image->delete();
+                }
+            }
+
 			$this->Session->setFlash(__('Post deleted'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->Session->setFlash(__('Post was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+
 }
