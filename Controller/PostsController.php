@@ -80,9 +80,6 @@ class PostsController extends BlogAppController
 
         // if used in conjunction with MysqlImageStorage plugin
         if (App::import('Model', 'MysqlImageStorage.Image')) {
-            $Image = new Image();
-            //$imgData = $Image->query('select * from images_posts where post_id = ' . (int) $id);
-            //echo '<pre>';var_dump($imgData);die;
         }
 
 		$this->set('post', $post);
