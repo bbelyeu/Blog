@@ -75,4 +75,19 @@ class Post extends BlogAppModel {
 		)
 	);
 
+    /**
+     * Get the most recent published blog posts
+     *
+     * @param int $limit
+     * @return null
+     */
+    public function getRecent($limit = 1)
+    {
+        return $this->find('first', array(
+            'conditions' => array('Post.publish <=' => 'NOW()'),
+            'recursive' => 0,
+            'order' => 'Post.publish desc',
+        ));
+    }
+
 }
