@@ -1,5 +1,8 @@
 <?php
 
+// Add rss extension for blog
+Router::parseExtensions('rss');
+
 Router::connect('/admin/blog', array(
     'plugin' => 'Blog',
     'controller' => 'Posts',
@@ -49,4 +52,19 @@ Router::connect('/admin/tags/:action/:id', array(
 ), array(
     'pass' => array('id'),
     'id' => '[0-9]+'
+));
+
+Router::connect('/blog', array(
+    'plugin' => 'Blog',
+    'controller' => 'Posts',
+    'action' => 'index',
+));
+
+Router::connect('/blog/post/:id', array(
+    'plugin' => 'Blog',
+    'controller' => 'Posts',
+    'action' => 'view',
+), array(
+    'pass' => array('id'),
+    'id' => '[0-9]+',
 ));

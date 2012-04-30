@@ -7,6 +7,21 @@ App::uses('BlogAppController', 'Blog.Controller');
  */
 class PostsController extends BlogAppController
 {
+    public $components = array('RequestHandler');
+
+    public $helpers = array('Text');
+
+    /**
+     * If auth component is turned on allow index & view without authorization
+     *
+     * @return null
+     */
+    public function beforeFilter()
+    {
+        if (!empty($this->Auth)) {
+            $this->Auth->allow('index', 'view');
+        }
+    }
 
     /**
      * index method
