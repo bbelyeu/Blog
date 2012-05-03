@@ -74,6 +74,7 @@ class PostsController extends BlogAppController
      */
 	public function admin_index() 
     {
+        $this->helpers[] = 'Text';
 		$this->Post->recursive = 0;
 		$this->set('posts', $this->paginate());
 	}
