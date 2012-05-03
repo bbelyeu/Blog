@@ -1,4 +1,6 @@
-<script type="text/javascript" src="/blog/ckeditor/ckeditor.js"></script>
+<?php
+    $this->Html->script('/blog/ckeditor/ckeditor.js', array('inline' => false));
+?>
 <style>
 input {
     width: 400px;
