@@ -21,6 +21,7 @@ class PostsController extends BlogAppController
         if (!empty($this->Auth)) {
             $this->Auth->allow('index', 'view');
         }
+        parent::beforeFilter();
     }
 
     /**
