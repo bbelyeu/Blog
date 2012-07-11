@@ -22,6 +22,9 @@ input {
             'type' => 'file',
             'label' => 'Upload new photo'
         ));
+        echo $this->Form->input('image_id', array(
+            'type' => 'hidden',
+        ));
 		echo $this->Form->input('title');
 		echo $this->Form->input('body', array(
             'class' => 'ckeditor'

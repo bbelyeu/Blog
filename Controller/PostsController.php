@@ -142,16 +142,12 @@ class PostsController extends BlogAppController
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
             // if used in conjunction with MysqlImageStorage plugin
-            if (App::import('Model', 'MysqlImageStorage.Image')) {
+            if (App::import('Model', 'MysqlImageStorage.Image') && !empty($this->request->data['Post']['photo_upload']['tmp_name'])) {
                 $this->ImageComponent = $this->Components->load('MysqlImageStorage.Image');
                 $this->request->data['Post']['image_id'] = $this->ImageComponent->process($this->request->data['Post']);
             }
 
 			if ($this->Post->save($this->request->data)) {
-
-                // if used in conjunction with MysqlImageStorage plugin
-                if (App::import('Model', 'MysqlImageStorage.Image')) {
-                }
 				$this->Session->setFlash(__('The post has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
