@@ -7,6 +7,24 @@ App::uses('BlogAppController', 'Blog.Controller');
  */
 class TagsController extends BlogAppController {
 
+    /**
+     * view method
+     *
+     * @param string $id
+     * @return void
+     */
+	public function view($id = null)
+    {
+		$this->Tag->id = $id;
+		if (!$this->Tag->exists()) {
+			throw new NotFoundException(__('Invalid tag'));
+		}
+
+        $tag = $this->Tag->read(null, $id);
+
+		$this->set('tag', $tag);
+	}
+
 
 /**
  * admin_index method

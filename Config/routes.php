@@ -68,3 +68,12 @@ Router::connect('/blog/post/:id', array(
     'pass' => array('id'),
     'id' => '[0-9]+',
 ));
+
+Router::connect('/blog/tag/:id', array(
+    'plugin' => 'Blog',
+    'controller' => 'Tags',
+    'action' => 'view',
+), array(
+    'pass' => array('id'),
+    'id' => '[0-9]+',
+));
